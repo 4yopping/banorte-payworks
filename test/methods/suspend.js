@@ -19,12 +19,13 @@ describe('Payworks#suspend', function () {
   })
 
   it('should failed when params are missing', function (done) {
-    try {
-      payworks.suspend()
-      done('should throw an error when params are missing')
-    } catch (e) {
-      done()
-    }
+    payworks.suspend()
+      .then((value) => {
+        done('should throw an error when params are missing')
+      })
+      .catch(() => {
+        done()
+      })
   })
 
   it('should validate params', function (done) {
@@ -39,7 +40,7 @@ describe('Payworks#suspend', function () {
 
         for (let param of required) {
           // Get error from each path
-          let e = err.details.filter(e => e.path === param)
+          let e = err.details.filter(e => e.path === param || e.path === param.toUpperCase())
           assert(e.length, `should throws a validation error when the \`${param}\` property is missing`)
           assert.equal(e[0].type, 'any.required')
         }

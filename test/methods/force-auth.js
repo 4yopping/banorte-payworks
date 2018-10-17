@@ -15,6 +15,7 @@ describe('Payworks#forceAuth', function () {
   beforeEach(function () {
     this.params = {
       amount: 189.00,
+      control_number: '4324234234',
       entry_mode: 'MANUAL',
       card_number: '4111111111111111',
       card_exp: '1220',
@@ -23,12 +24,12 @@ describe('Payworks#forceAuth', function () {
   })
 
   it('should failed when params are missing', function (done) {
-    try {
-      payworks.forceAuth()
-      done('should throw an error when params are missing')
-    } catch (e) {
-      done()
-    }
+    payworks.forceAuth()
+      .then(() => {
+        done('should throw an error when params are missing')
+      }).catch(() => {
+        done()
+      })
   })
 
   it('should validate params', function (done) {
@@ -45,7 +46,7 @@ describe('Payworks#forceAuth', function () {
 
         for (let param of required) {
           // Get error from each path
-          let e = err.details.filter(e => e.path === param)
+          let e = err.details.filter(e => e.path === param || e.path === param.toUpperCase())
           assert(e.length, `should throws a validation error when the \`${param}\` property is missing`)
           assert.equal(e[0].type, 'any.required')
         }

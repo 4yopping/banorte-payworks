@@ -15,16 +15,6 @@ describe('Payworks#close', function () {
   beforeEach(function () {
     this.params = {}
   })
-
-  it('should failed when params are missing', function (done) {
-    try {
-      payworks.close()
-      done('should throw an error when params are missing')
-    } catch (e) {
-      done()
-    }
-  })
-
   it('should obtain a result with callbacks', function (done) {
     payworks.close(this.params, function (error, body, response) {
       if (error) {

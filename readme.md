@@ -1,5 +1,6 @@
 <img src="http://res.cloudinary.com/cloudinary4yopping/image/upload/v1458266051/logos/futurecommerce.png" alt="Futurecommerce" align="right" width="250" height="103"/>
 
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](http://standardjs.com)
 Banorte Payworks for Node.js
 ================================
 
@@ -30,6 +31,10 @@ const payworks = new Payworks({
   terminal: '08641401'
 })
 ```
+The mode of the call is made is passed with the mode variable. This can be passed
+in the instancing call, in every method call in which case this is prefered. Also you can
+pass the environment variable BPW_MODE to set the mode, this is the variable prefered over others.
+The default mode used when no one is passed is RND = random.
 
 ### Using events
 

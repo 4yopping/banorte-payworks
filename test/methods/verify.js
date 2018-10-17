@@ -19,15 +19,6 @@ describe('Payworks#verify', function () {
     }
   })
 
-  it('should failed when params are missing', function (done) {
-    try {
-      payworks.verify()
-      done('should throw an error when params are missing')
-    } catch (e) {
-      done()
-    }
-  })
-
   it('should obtain a result with callbacks', function (done) {
     payworks.verify(this.params, function (error, body, response) {
       if (error) {

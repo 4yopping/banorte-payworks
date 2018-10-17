@@ -3,16 +3,16 @@
 const assert = require('assert')
 const request = require('../../lib/utils').request
 
-let params = {
-  cmd_trans: 'PREAUTH',
-  merchant_id: '121221',
-  user: 'AB912899',
-  password: 'AB912899',
-  terminal_id: '12212ABC',
-  amount: 189.00,
-  entry_mode: 'MANUAL',
-  card_number: '4111111111111111',
-  card_exp: '1220'
+const params = {
+  CMD_TRANS: 'PREAUTH',
+  MERCHANT_ID: '121221',
+  USER: 'AB912899',
+  PASSWORD: 'AB912899',
+  TERMINAL_ID: '12212ABC',
+  AMOUNT: 189.00,
+  ENTRY_MODE: 'MANUAL',
+  CARD_NUMBER: '4111111111111111',
+  CARD_EXP: '1220'
 }
 
 describe('Utils#Request', function () {
@@ -42,12 +42,12 @@ describe('Utils#Request', function () {
 
   it('should not make a request without `user` param', function (done) {
     request({
-      password: params.password,
-      merchant_id: params.merchant_id,
-      cmd_trans: params.cmd_trans
+      password: params.PASSWORD,
+      merchant_id: params.MERCHANT_ID,
+      cmd_trans: params.CMD_TRANS
     }, function (err, res) {
       if (err) {
-        assert.equal(err.message, 'user is required')
+        assert.equal(err.message, 'USER is required')
         return done()
       }
 
@@ -57,12 +57,12 @@ describe('Utils#Request', function () {
 
   it('should not make a request without `password` param', function (done) {
     request({
-      user: params.user,
-      merchant_id: params.merchant_id,
-      cmd_trans: params.cmd_trans
+      user: params.USER,
+      merchant_id: params.MERCHANT_ID,
+      cmd_trans: params.CMD_TRANS
     }, function (err, res) {
       if (err) {
-        assert.equal(err.message, 'password is required')
+        assert.equal(err.message, 'PASSWORD is required')
         return done()
       }
 
@@ -72,12 +72,12 @@ describe('Utils#Request', function () {
 
   it('should not make a request without `merchant_id` param', function (done) {
     request({
-      user: params.user,
-      password: params.password,
-      cmd_trans: params.cmd_trans
+      user: params.USER,
+      password: params.PASSWORD,
+      cmd_trans: params.CMD_TRANS
     }, function (err, res) {
       if (err) {
-        assert.equal(err.message, 'merchant_id is required')
+        assert.equal(err.message, 'MERCHANT_ID is required')
         return done()
       }
 
@@ -87,12 +87,12 @@ describe('Utils#Request', function () {
 
   it('should not make a request without `cmd_trans` param', function (done) {
     request({
-      user: params.user,
-      password: params.password,
-      merchant_id: params.merchant_id
+      user: params.USER,
+      password: params.PASSWORD,
+      merchant_id: params.MERCHANT_ID
     }, function (err, res) {
       if (err) {
-        assert.equal(err.message, 'cmd_trans is required')
+        assert.equal(err.message, 'CMD_TRANS is required')
         return done()
       }
 
@@ -106,16 +106,16 @@ describe('Utils#Request', function () {
     }), function (err) {
       if (!err) return done('should throw an error')
       assert(err)
-      assert.equal(err.message, 'cmd_trans is invalid')
+      assert.equal(err.message, 'CMD_TRANS is invalid')
     })
 
     request(Object.assign(params, {
-      cmd_trans: 'AUTHH'
+      CMD_TRANS: 'AUTHH'
     }), function (err) {
       if (!err) return done('should throw an error')
 
       assert(err)
-      assert.equal(err.message, 'cmd_trans is invalid')
+      assert.equal(err.message, 'CMD_TRANS is invalid')
     })
 
     request(Object.assign(params, {

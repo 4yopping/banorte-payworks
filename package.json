@@ -37,6 +37,8 @@
   },
   "dependencies": {
     "co": "^4.6.0",
+    "co-mocha": "^1.1.3",
+    "eventemitter2": "^1.0.5",
     "joi": "^8.0.5",
     "request": "^2.72.0"
   }

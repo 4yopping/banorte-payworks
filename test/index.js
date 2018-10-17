@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const EventEmitter = require('events')
+const EventEmitter = require('eventemitter2').EventEmitter2
 const Payworks = require('../lib')
 
 let options = {

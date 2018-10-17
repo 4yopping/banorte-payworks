@@ -13,45 +13,42 @@ let payworks = new Payworks({
 
 describe('Payworks#reverse', function () {
   beforeEach(function () {
-    this.params = {
-      reference: '91289218'
-    }
+    this.params = {}
   })
 
   it('should failed when params are missing', function (done) {
-    try {
-      payworks.reverse()
+    payworks.reverse()
+    .then(() => {
       done('should throw an error when params are missing')
-    } catch (e) {
-      done()
-    }
+    })
+  .catch(() => {
+    done()
+  })
   })
 
   it('should validate params', function (done) {
     let required = [
-      'reference'
-    ]
-
+      'reference' ]
     payworks
     .on('reverse.error', function (err) {
-      try {
-        assert.equal(err.name, 'ValidationError')
-
-        for (let param of required) {
+      assert.equal(err.name, 'ValidationError')
+      for (let param of required) {
           // Get error from each path
-          let e = err.details.filter(e => e.path === param)
-          assert(e.length, `should throws a validation error when the \`${param}\` property is missing`)
-          assert.equal(e[0].type, 'any.required')
-        }
-        done()
-      } catch (e) {
-        done(e)
+        let e = err.details.filter(e => e.path === param || e.path === param.toUpperCase())
+        assert(e.length, `should throws a validation error when the \`${param}\` property is missing`)
+        assert.equal(e[0].type, 'any.required')
       }
     })
     .reverse({})
+    .catch(() => {
+      done()
+    })
   })
 
   it('should obtain a result with callbacks', function (done) {
+    this.params = {
+      reference: 'testing_reference'
+    }
     payworks.reverse(this.params, function (error, body, response) {
       if (error) {
         try {
@@ -70,11 +67,17 @@ describe('Payworks#reverse', function () {
   })
 
   it('should obtain a result with yieldables', function * () {
+    this.params = {
+      reference: 'testing_reference'
+    }
     let body = yield payworks.reverse(this.params)
     assert(body.resultado_payw)
   })
 
   it('should obtain a result with thenables', function * (done) {
+    this.params = {
+      reference: 'testing_reference'
+    }
     payworks.reverse(this.params)
     .then(function (body) {
       assert(body.resultado_payw)
@@ -84,6 +87,9 @@ describe('Payworks#reverse', function () {
   })
 
   it('should obtain a result with events', function (done) {
+    this.params = {
+      reference: 'testing_reference'
+    }
     payworks
     .on('reverse.approved', function () {
       done()
